@@ -1,0 +1,22 @@
+Appliction for Group project
+
+description
+A appliction used for group project, It will allow user to post something and give comment on it.
+
+feature
+- Create a Group
+- shared post and comment inside group
+- share document inside group
+
+
+Tasks
+- App & API : add/remove members
+- App & API : Access by Token (expire after 7days)
+- App : request using JSON
+- App & API : Reg account
+- App & API : Messaging
+- App : notification when new post in group (using GCM)
+
+Extra Tasks(only when time is enough)
+- App & API : Upload document
+- App : Upload photo by camera
