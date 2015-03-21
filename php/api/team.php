@@ -10,6 +10,10 @@ class teamHandler{
 			case 'new':
 				return $this->newTeam($para['uid'],$para['name'],$para['desrc']);
 			break;
+
+			case 'del':
+				return $this->delTeam($para['teamid']);
+			break;
 		}
 	}
 	
@@ -34,6 +38,22 @@ class teamHandler{
 		$sql = 'INSERT into member (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$GLOBALS['mysqli']->insert_id.'\',\'1\')';
 		$query2 = $GLOBALS['mysqli']->query($sql);
 		return $this->getTeam($uid);
+	}
+
+	function delTeam($teamid){
+		$arr=array();
+		$sql = 'DELETE from team where `teamid` = \''.$teamid.'\'';
+		$query = $GLOBALS['mysqli']->query($sql);
+		$sql = 'DELETE from member where `teamid` = \''.$teamid.'\'';
+		$query2 = $GLOBALS['mysqli']->query($sql);
+		$sql = 'DELETE from message where `teamid` = \''.$teamid.'\'';
+		$query3 = $GLOBALS['mysqli']->query($sql);
+		if(!$query){
+			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+		}else{
+			$arr['result'] = 'true';
+		}
+		return $arr;
 	}
 }
 ?>

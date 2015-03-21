@@ -1,6 +1,7 @@
 <?php
 require './api/login.php';
 require './api/team.php';
+require './api/member.php';
 
 $dbhost = "localhost";
 $dbuser = "";
@@ -15,16 +16,25 @@ $para = requestDecode($request);
 $response='';
 
 switch($para['handler']){
-	case 'login':
-		$handler = new loginHandler();
-		$response = $handler->main($para);
-	break;
-	
-	case 'team':
-		$handler = new teamHandler();
-		$response = $handler->main($para);
-	break;
-	
+    case 'login':
+        $handler = new loginHandler();
+        $response = $handler->main($para);
+        break;
+
+    case 'team':
+        $handler = new teamHandler();
+        $response = $handler->main($para);
+        break;
+
+    case 'member':
+        $handler = new memberHandler();
+        $response = $handler->main($para);
+        break;
+
+    case 'message':
+        $handler = new messageHandler();
+        $response = $handler->main($para);
+        break;
 }
 /*
 switch($para['action']){
@@ -40,13 +50,13 @@ echo json_encode($response);
 
 
 function requestDecode($str){
-	$arr = array();
-	$request = base64_decode($str);
-	$temp = explode('&',$request);
-	foreach($temp as $var){
-		$value = explode('=',$var);
-		$arr[$value[0]] = $value[1];
-	}
-	return $arr;
+    $arr = array();
+    $request = base64_decode($str);
+    $temp = explode('&',$request);
+    foreach($temp as $var){
+        $value = explode('=',$var);
+        $arr[$value[0]] = $value[1];
+    }
+    return $arr;
 }
 ?>
