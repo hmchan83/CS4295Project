@@ -2,6 +2,7 @@
 require './api/login.php';
 require './api/team.php';
 require './api/member.php';
+date_default_timezone_set('Asia/Hong_Kong');
 
 $dbhost = "localhost";
 $dbuser = "";
