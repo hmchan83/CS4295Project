@@ -13,6 +13,7 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.cs4295.team.util.APICallBuilder;
 import com.cs4295.team.util.Base64;
 import com.cs4295.team.util.Sharedinfo;
 import com.cs4295.team.util.Teaminfo;
@@ -61,7 +62,7 @@ public class MainActivity extends Activity
 		 @Override
        public void handleMessage(Message msg) {
 			 if(msg.what==2){
-				Log.d("DEBUG",(String)msg.obj);
+				Log.d("newteam",(String)msg.obj);
 				JSONObject json;
 				try {
 					json = new JSONObject((String)msg.obj);
@@ -100,7 +101,7 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-        getTeam();
+        //getTeam();
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
@@ -269,8 +270,10 @@ public class MainActivity extends Activity
 				            	try{
 				            		Sharedinfo share = Sharedinfo.getInstance();
 				            		int uid = share.getUser().getUid();
+				            		
 				            		String New_teamname = inputname.getText().toString();
 				            		String New_teamdesrc = inputdesrc.getText().toString();
+				            		/*
 				            		String request = "handler=team&action=new&uid="+uid+"&name="+New_teamname+"&desrc="+New_teamdesrc;
 				            		Log.d("DEBUG", request);
 				            		String serverURL=PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("Server", "ds216.net");
@@ -280,7 +283,7 @@ public class MainActivity extends Activity
 					                HttpClient httpClient = new DefaultHttpClient();
 					                HttpContext localContext = new BasicHttpContext();
 					                HttpGet httpGet = new HttpGet(surl); // URL!	         
-						   			HttpResponse response = httpClient.execute(httpGet, localContext);;
+						   			HttpResponse response = httpClient.execute(httpGet, localContext);
 						   			String result = "";
 						   			String HTML = "";
 						   			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -288,7 +291,17 @@ public class MainActivity extends Activity
 						   			while ((line = reader.readLine()) != null) {
 						   				result += line;
 						   				HTML = result;
-						   			}
+						   			}*/
+				            		String serverURL=PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext()).getString("Server", "ds216.net");
+				            		APICallBuilder Apicall= new APICallBuilder("http://"+serverURL+"/team/");
+						            Apicall.setGETpara("handler=team&action=new");
+						            JSONObject obj = new JSONObject();
+						            obj.put("uid", uid);
+						            obj.put("name",New_teamname);
+						            obj.put("desrc",New_teamdesrc);
+						            Log.d("DEBUG", obj.toString());
+						            Apicall.setPOSTpara(obj.toString());
+						            String HTML = Apicall.getResponse();
 						   			Message message = new Message();   
 						   			message.what = 2;   
 						   			message.obj = HTML;

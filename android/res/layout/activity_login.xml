@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.marcus.team.LoginActivity" >
+    tools:context="com.cs4295.team.LoginActivity" >
 
     <TextView
         android:id="@+id/lbl_username"
@@ -60,5 +60,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="@string/login_submit" />
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btn_login"
+        android:layout_below="@+id/btn_login"
+        android:layout_marginTop="53dp"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

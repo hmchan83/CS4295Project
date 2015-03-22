@@ -19,11 +19,11 @@ class loginHandler{
 		}
 		$result = $query->fetch_array(MYSQLI_BOTH);
 		if($result[0]>0){
-			$arr['result']='True';
-			$query = $GLOBALS['mysqli']->query('SELECT uid,username FROM user WHERE username = \''.$username.'\' AND password = \''.$password.'\'');
-			$results = $query->fetch_array(MYSQLI_ASSOC);
+			$arr['result']='True';			
 			$date = date('Y-m-d h:i:s', time()+3600);
 			$query2 = $GLOBALS['mysqli']->query('UPDATE user SET token =\''.$this->createToken().'\', expireday=\''.$date.'\' WHERE  username = \''.$username.'\' AND password = \''.$password.'\'');
+			$query = $GLOBALS['mysqli']->query('SELECT uid,username,token FROM user WHERE username = \''.$username.'\' AND password = \''.$password.'\'');
+			$results = $query->fetch_array(MYSQLI_ASSOC);
 			foreach($results as $key=>$var){
 				$arr[$key]=$var;	
 			}

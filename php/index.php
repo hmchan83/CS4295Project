@@ -11,9 +11,16 @@ $db = "CS4295";
 
 @$GLOBALS['mysqli'] =  new mysqli($dbhost, $dbuser, $dbpwd, $db);
 
-$request = $_GET['request'];
-$para = requestDecode($request);
-//print_r($para);
+$para = array();
+foreach ($_GET as $key => $value){
+	$para[$key] = $value;	
+}
+$json = file_get_contents('php://input');
+//echo $json;
+$array = json_decode($json, true);
+foreach ($array as $key => $value){
+	$para[$key] = $value;
+}
 $response='';
 
 switch($para['handler']){

@@ -11,6 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.cs4295.team.util.APICallBuilder;
 import com.cs4295.team.util.Base64;
 import com.cs4295.team.util.MD5;
 import com.cs4295.team.util.Sharedinfo;
@@ -36,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("HandlerLeak") 
@@ -44,6 +46,8 @@ public class LoginActivity extends Activity {
 	private EditText LoginUser;
 	private EditText LoginPass;
 	private String serverURL;
+	private String username;
+	private String token;
 	SharedPreferences prefs;
 	private Sharedinfo share = Sharedinfo.getInstance();
 	
@@ -54,13 +58,15 @@ public class LoginActivity extends Activity {
 				 try{
 					 String res = (String)msg.obj;
 					 JSONObject json = new JSONObject(res);
-					 Log.d("DEBUG","'"+json.getString("result")+"'");
-					 Log.d("DEBUG",""+(json.getString("result").equals("True")));
+					 Log.d("handleMessage","'"+res+"'");
+					 Log.d("handleMessage",""+(json.getString("result").equals("True")));
 					 if(json.getString("result").equals("True")){
 						 share.setUser(new Userinfo(json.getInt("uid"),json.getString("username")));						 
 						 getTeam();
-						 
-						 
+						 SharedPreferences.Editor editor = prefs.edit();
+						 editor.putString("username", json.getString("username"));
+						 editor.putString("token", json.getString("token"));
+						 editor.commit();
 					 }else{
 						 Context context = getApplicationContext();
 						 CharSequence text = getString(R.string.login_fail);
@@ -106,6 +112,10 @@ public class LoginActivity extends Activity {
 		LoginUser = (EditText) findViewById(R.id.input_username);
 		LoginPass = (EditText) findViewById(R.id.input_passowrd);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		username = prefs.getString("username","");
+		token = prefs.getString("token","");
+		TextView test = (TextView) findViewById(R.id.test);
+		test.setText(username+" ,"+token);
 		LoginButton.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
@@ -150,6 +160,7 @@ public class LoginActivity extends Activity {
 			            		Base64.Encoder encoder = Base64.getEncoder();			            		
 				                String surl = "http://"+serverURL+"/team/?request="+new String(encoder.encode(request.getBytes()));
 				                Log.d("DEBUG", surl);
+				                /*
 				                HttpClient httpClient = new DefaultHttpClient();
 				                HttpContext localContext = new BasicHttpContext();
 				                HttpGet httpGet = new HttpGet(surl); // URL!	         
@@ -161,7 +172,16 @@ public class LoginActivity extends Activity {
 					   			while ((line = reader.readLine()) != null) {
 					   				result += line;
 					   				HTML = result;
-					   			}
+					   			}*/
+				                APICallBuilder Apicall= new APICallBuilder("http://"+serverURL+"/team/");
+				                Apicall.setGETpara("handler=login&action=login");
+				                JSONObject obj = new JSONObject();
+				                obj.put("username", LoginUser.getText().toString());
+				                obj.put("password", md5encode.getMD5EncryptedString(LoginPass.getText().toString()));
+				                Log.d("DEBUG", obj.toString());
+				                Apicall.setPOSTpara(obj.toString());
+				                String HTML = Apicall.getResponse();
+				                Log.d("HTML",HTML);
 					   			Message message = new Message();   
 					   			message.what = 1;   
 					   			message.obj = HTML;
@@ -193,7 +213,7 @@ public class LoginActivity extends Activity {
 				            		Base64.Encoder encoder = Base64.getEncoder();			            		
 					                String surl = "http://"+serverURL+"/team/?request="+new String(encoder.encode(request.getBytes()));
 					                Log.d("DEBUG", surl);
-					                HttpClient httpClient = new DefaultHttpClient();
+					                /*HttpClient httpClient = new DefaultHttpClient();
 					                HttpContext localContext = new BasicHttpContext();
 					                HttpGet httpGet = new HttpGet(surl); // URL!	         
 						   			HttpResponse response = httpClient.execute(httpGet, localContext);;
@@ -204,7 +224,14 @@ public class LoginActivity extends Activity {
 						   			while ((line = reader.readLine()) != null) {
 						   				result += line;
 						   				HTML = result;
-						   			}
+						   			}*/
+					                APICallBuilder Apicall= new APICallBuilder("http://"+serverURL+"/team/");
+					                Apicall.setGETpara("handler=team&action=get");
+					                JSONObject obj = new JSONObject();
+					                obj.put("uid", share.getUser().getUid());
+					                Log.d("DEBUG", obj.toString());
+					                Apicall.setPOSTpara(obj.toString());
+					                String HTML = Apicall.getResponse();
 						   			Message message = new Message();   
 						   			message.what = 2;   
 						   			message.obj = HTML;
