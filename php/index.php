@@ -7,17 +7,19 @@ date_default_timezone_set('Asia/Hong_Kong');
 $dbhost = "localhost";
 $dbuser = "";
 $dbpwd = "";
-$db = "CS4295";
+$db = "justforgra_CS4295";
 
-@$GLOBALS['mysqli'] =  new mysqli($dbhost, $dbuser, $dbpwd, $db);
+$GLOBALS['mysqli'] =  new mysqli($dbhost, $dbuser, $dbpwd, $db);
 
 $para = array();
 foreach ($_GET as $key => $value){
 	$para[$key] = $value;	
 }
-$json = file_get_contents('php://input');
+$json = file_get_contents("php://input");
 //echo $json;
 $array = json_decode($json, true);
+//var_dump($array);
+if(count($array)>0)
 foreach ($array as $key => $value){
 	$para[$key] = $value;
 }
