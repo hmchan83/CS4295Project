@@ -19,6 +19,7 @@ class memberHandler{
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+			$arr['result'] = 'false';
 		}else{
 			$arr['result'] = 'true';
 		}
@@ -31,6 +32,7 @@ class memberHandler{
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+			$arr['result'] = 'false';
 		}else{
 			$arr['result'] = 'true';
 		}

@@ -33,11 +33,18 @@ class teamHandler{
 	}
 	
 	function newTeam($uid,$name,$desrc){
+		$arr=array();
 		$sql = 'INSERT into team (`teamname`, `desrc`) VALUES (\''.$name.'\',\''.$desrc.'\')';
 		$query = $GLOBALS['mysqli']->query($sql);
 		$sql = 'INSERT into member (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$GLOBALS['mysqli']->insert_id.'\',\'1\')';
 		$query2 = $GLOBALS['mysqli']->query($sql);
-		return $this->getTeam($uid);
+		if(!$query){
+			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+			$arr['result'] = 'false';
+		}else{
+			$arr['result'] = 'true';
+		}
+		return $arr;	
 	}
 
 	function delTeam($teamid){
@@ -50,6 +57,7 @@ class teamHandler{
 		$query3 = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+			$arr['result'] = 'false';
 		}else{
 			$arr['result'] = 'true';
 		}
