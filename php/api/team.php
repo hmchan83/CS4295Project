@@ -19,7 +19,7 @@ class teamHandler{
 	
 	function getTeams($uid){
 		$arr=array();
-		$query = $GLOBALS['mysqli']->query('SELECT * FROM team WHERE teamid IN (SELECT teamid FROM member WHERE uid=\''.$uid.'\')');
+		$query = $GLOBALS['mysqli']->query('SELECT * FROM team WHERE teamid IN (SELECT teamid FROM team_user WHERE uid=\''.$uid.'\')');
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
 		}else{
@@ -36,7 +36,7 @@ class teamHandler{
 		$arr=array();
 		$sql = 'INSERT into team (`teamname`, `desrc`) VALUES (\''.$name.'\',\''.$desrc.'\')';
 		$query = $GLOBALS['mysqli']->query($sql);
-		$sql = 'INSERT into member (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$GLOBALS['mysqli']->insert_id.'\',\'1\')';
+		$sql = 'INSERT into team_user (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$GLOBALS['mysqli']->insert_id.'\',\'1\')';
 		$query2 = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
@@ -51,7 +51,7 @@ class teamHandler{
 		$arr=array();
 		$sql = 'DELETE from team where `teamid` = \''.$teamid.'\'';
 		$query = $GLOBALS['mysqli']->query($sql);
-		$sql = 'DELETE from member where `teamid` = \''.$teamid.'\'';
+		$sql = 'DELETE from team_user where `teamid` = \''.$teamid.'\'';
 		$query2 = $GLOBALS['mysqli']->query($sql);
 		$sql = 'DELETE from message where `teamid` = \''.$teamid.'\'';
 		$query3 = $GLOBALS['mysqli']->query($sql);

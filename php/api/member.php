@@ -19,7 +19,7 @@ class memberHandler{
 	
 	function addMember($teamid, $uid){
 		$arr=array();
-		$sql = 'INSERT into member (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$teamid.'\',\'0\')';
+		$sql = 'INSERT into team_user (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$teamid.'\',\'0\')';
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
@@ -32,7 +32,7 @@ class memberHandler{
 
 	function getMembers($teamid){
 		$arr=array();
-		$sql = 'SELECT * from member where `teamid` = \''.$teamid.'\'';
+		$sql = 'SELECT * from team_user where `teamid` = \''.$teamid.'\'';
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
@@ -49,7 +49,7 @@ class memberHandler{
 
 	function delMember($teamid, $uid){
 		$arr=array();
-		$sql = 'DELETE from member where `teamid` = \''.$teamid.'\' and `uid` = \''.$uid.'\'';
+		$sql = 'DELETE from team_user where `teamid` = \''.$teamid.'\' and `uid` = \''.$uid.'\'';
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
