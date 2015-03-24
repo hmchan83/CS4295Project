@@ -7,6 +7,10 @@ class memberHandler{
 				return $this->addMember($para['teamid'], $para['uid']);
 			break;
 
+			case 'get':
+				return $this->getMembers($para['teamid']);
+			break;
+
 			case 'del':
 				return $this->delMember($para['teamid'], $para['uid']);
 			break;
@@ -22,6 +26,23 @@ class memberHandler{
 			$arr['result'] = 'false';
 		}else{
 			$arr['result'] = 'true';
+		}
+		return $arr;
+	}
+
+	function getMembers($teamid){
+		$arr=array();
+		$sql = 'SELECT * from member where `teamid` = \''.$teamid.'\'';
+		$query = $GLOBALS['mysqli']->query($sql);
+		if(!$query){
+			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+			$arr['result'] = 'false';
+		}else{
+			$members = array();
+			while($result = $query->fetch_array(MYSQLI_ASSOC)){
+				$members[]=$result;
+			}
+			$arr['result']=$members;
 		}
 		return $arr;
 	}

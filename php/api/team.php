@@ -4,7 +4,7 @@ class teamHandler{
 	function main($para){
 		switch($para['action']){
 			case 'get':
-				return $this->getTeam($para['uid']);
+				return $this->getTeams($para['uid']);
 			break;
 			
 			case 'new':
@@ -17,7 +17,7 @@ class teamHandler{
 		}
 	}
 	
-	function getTeam($uid){
+	function getTeams($uid){
 		$arr=array();
 		$query = $GLOBALS['mysqli']->query('SELECT * FROM team WHERE teamid IN (SELECT teamid FROM member WHERE uid=\''.$uid.'\')');
 		if(!$query){
