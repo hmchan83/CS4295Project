@@ -2,12 +2,16 @@ package com.cs4295.team;
 
 import java.util.ArrayList;
 
+import com.cs4295.team.fragment.MainFragment;
+import com.cs4295.team.fragment.NewTeamFragment;
+import com.cs4295.team.fragment.TeamMessageFragment;
 import com.cs4295.team.util.Sharedinfo;
 import com.cs4295.team.util.Teaminfo;
 
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import	android.app.FragmentManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +19,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -147,7 +152,7 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
+     * @param fragmentId   The android:id of this fragment in its activity's fragment_messgelist.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
@@ -218,6 +223,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
+    /*
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
@@ -228,6 +234,35 @@ public class NavigationDrawerFragment extends Fragment {
         }
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
+        }
+    }*/
+
+    private void selectItem(int position) {
+        Log.d("Fragment", "Selected : " + position);
+        mCurrentSelectedPosition = position;
+        if (mDrawerListView != null) {
+            mDrawerListView.setItemChecked(position, true);
+        }
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }
+        Fragment fragment = null;
+        FragmentManager fragmentManager = getFragmentManager();
+        switch (position) {
+            case 0:
+                fragment = new MainFragment();
+                break;
+            case 1:
+                fragment = new NewTeamFragment();
+                break;
+            default:
+                Log.d("Fragment", "Selected : " + position);
+                TeamMessageFragment temp = new TeamMessageFragment();
+                temp.setTeamID(position);
+                fragment = temp;
+        }
+        if (fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
         }
     }
 

@@ -102,6 +102,10 @@ public class MainActivity extends Activity
         };
     }
 
+    public static Handler getHandler(){
+        return myHandler;
+    }
+
     public NavigationDrawerFragment getmNavigationDrawerFragment() {
 		return mNavigationDrawerFragment;
 	}
@@ -249,7 +253,7 @@ public class MainActivity extends Activity
                 Bundle savedInstanceState) {
         	int i = getArguments().getInt(ARG_SECTION_NUMBER);
         	View rootView;
-        	Sharedinfo share = Sharedinfo.getInstance();
+        	final Sharedinfo shared = Sharedinfo.getInstance();
         	if(i==1){
         		rootView = inflater.inflate(R.layout.fragment_main, container, false);
         	}else if(i==2){
@@ -265,7 +269,7 @@ public class MainActivity extends Activity
         	}else{
         		rootView = inflater.inflate(R.layout.viewteam, container, false);
         		TextView name=(TextView)rootView.findViewById(R.id.view_teamname);
-        		name.setText("You are viewing Team "+share.getTeams().get(i-2-1).getTeamname());
+        		name.setText("You are viewing Team "+shared.getTeams().get(i-2-1).getTeamname());
         	}
             return rootView;
         }

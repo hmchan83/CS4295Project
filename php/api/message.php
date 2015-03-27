@@ -4,7 +4,7 @@ class messageHandler{
 	function main($para){
 		switch($para['action']){
 			case 'add':
-				return $this->addMessage($para['replyid'], $para['teamid'], $para['uid'], $para['msg']);
+				return $this->addMessage($para['replyid'], $para['teamid'], $para['uid'], $para['msg'],$para['title']);
 			break;
 
 			case 'get':
@@ -13,9 +13,9 @@ class messageHandler{
 		}
 	}
 	
-	function addMessage($replyid, $teamid, $uid, $msg){
+	function addMessage($replyid, $teamid, $uid, $msg, $title){
 		$arr=array();
-		$sql = 'INSERT into message (`replyid`, `teamid`,`uid`,`msg`,`timestamp`) VALUES (\''.$replyid.'\',\''.$teamid.'\', \''.$uid.'\', \''.$msg.'\', NOW())';
+		$sql = 'INSERT into message (`replyid`, `teamid`,`uid`,`msg`,`title`,`timestamp`) VALUES (\''.$replyid.'\',\''.$teamid.'\', \''.$uid.'\', \''.$msg.'\', \''.$title.'\', NOW())';
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);

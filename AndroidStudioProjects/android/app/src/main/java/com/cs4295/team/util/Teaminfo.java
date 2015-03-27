@@ -6,7 +6,7 @@ public class Teaminfo {
 	private int teamid;
 	private String teamname;
 	private String desrc;
-	private Date create; 
+	private Date create;
 	
 	public Teaminfo(int teamid, String teamname, String desrc, String create) {
 		super();

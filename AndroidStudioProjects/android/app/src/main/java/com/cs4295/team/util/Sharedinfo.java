@@ -18,6 +18,15 @@ public class Sharedinfo {
 		this.teams = teams;
 	}
 
+    public Teaminfo getTeam(int teamid){
+        for(Teaminfo team : teams){
+            if(team.getTeamid()==teamid){
+                return team;
+            }
+        }
+        return null;
+    }
+
 	public static Sharedinfo getInstance() {
 		return instance;
 	}

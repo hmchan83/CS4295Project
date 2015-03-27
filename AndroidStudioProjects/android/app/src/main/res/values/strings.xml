@@ -13,6 +13,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="login_username">Username : </string>
     <string name="login_password">Password : </string>
+    <string name="login_error">Login Error!</string>
     <string name="login_submit">Login</string>
     <string name="login_fail">Login Fail!</string>
     <string name="pref_server">Select Server</string>

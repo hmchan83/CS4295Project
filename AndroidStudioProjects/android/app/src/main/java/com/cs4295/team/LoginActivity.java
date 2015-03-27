@@ -76,7 +76,11 @@ public class LoginActivity extends Activity {
 						 toast.show();
 					 }
 				 }catch(JSONException e){
-					 
+                     Context context = getApplicationContext();
+                     CharSequence text = getString(R.string.login_error);
+                     int duration = Toast.LENGTH_SHORT;
+                     Toast toast = Toast.makeText(context, text, duration);
+                     toast.show();
 				 }
 			 }if(msg.what==2){
 					Log.d("DEBUG",(String)msg.obj);
