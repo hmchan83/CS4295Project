@@ -1,0 +1,30 @@
+Thrid Version: 4/4
+- Document upload (Bonus only)
+-All JSON
+
+Second Version: 3/27
+- Reg account
+- Add/Remove teammate
+- Logout + remeber user
+- Most JSON
+
+First Version: 3/18
+Target :
+- Show Team / Create Team
+- Messaging + notify
+- Partly JSON
+
+3/12/2015
+- nav bar
+- new team (but do not update the team list)
+- response are JSON now
+
+3/11/2015
+- Login API use DB
+- DB design
+- Passowrd enpty
+- Server Setting of developing
+
+3/10/2015
+- Layout of Login page
+- Login function

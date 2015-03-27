@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/action_settings" >
+        <ListPreference
+            android:dialogTitle="@string/pref_server"
+            android:key="Server"
+            android:summary="@string/pref_server_sum"
+            android:title="@string/pref_server"
+             android:entries="@array/Serverentries"
+            android:entryValues="@array/Servervalues"
+            android:defaultValue="ds216.net"
+             />
+
+    </PreferenceCategory>
+</PreferenceScreen><!-- From: file:/C:/Users/Marcus%20Lee/Desktop/AndroidStudioProjects/android/app/src/main/res/xml/preferences.xml -->
