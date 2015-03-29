@@ -27,7 +27,7 @@ class messageHandler{
 
 	function getMessage($teamid, $start, $rows){
 		$arr=array();
-		$sql = 'SELECT * from message where `teamid`=\''.$teamid.'\' LIMIT '.$start.', '.$rows;
+		$sql = 'SELECT * from message where `teamid`=\''.$teamid.'\' Order by timestamp DESC LIMIT '.$start.', '.$rows;
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);

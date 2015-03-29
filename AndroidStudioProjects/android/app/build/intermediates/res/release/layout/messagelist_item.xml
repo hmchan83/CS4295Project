@@ -1,24 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="100dip"
     android:padding="6dip" >
-
-    <TextView
-        android:id="@+id/msg_brief"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/msg_topic"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/msg_brief"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
@@ -26,4 +14,16 @@
         android:text="Example application"
         android:textSize="16sp" />
 
-</RelativeLayout> <!-- From: file:/T:/AndroidStudioProjects/android/app/src/main/res/layout/messagelist_item.xml -->
+    <TextView
+        android:id="@+id/msg_brief"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_below="@id/msg_topic"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:textSize="12sp" />
+
+</RelativeLayout><!-- From: file:/T:/AndroidStudioProjects/android/app/src/main/res/layout/messagelist_item.xml -->

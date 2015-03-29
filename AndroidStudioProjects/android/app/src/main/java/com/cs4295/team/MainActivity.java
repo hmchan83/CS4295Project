@@ -1,12 +1,16 @@
 package com.cs4295.team;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
@@ -17,6 +21,8 @@ import com.cs4295.team.util.APICallBuilder;
 import com.cs4295.team.util.Base64;
 import com.cs4295.team.util.Sharedinfo;
 import com.cs4295.team.util.Teaminfo;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -24,7 +30,9 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -57,6 +65,9 @@ public class MainActivity extends Activity
     private String serverURL;
 	SharedPreferences prefs;
 	private Sharedinfo share = Sharedinfo.getInstance();
+    private GoogleCloudMessaging gcm = null;
+    private Context context;
+    private String SENDER_ID="45869543355";//Google API id
 
     static Handler myHandler;
 
@@ -158,12 +169,73 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+        
+        //GCM
+        context = getApplicationContext();
+
+        // initial GCM
+        gcm = GoogleCloudMessaging.getInstance(this);
+
+        // register with Google.
+        new AsyncTask<Void,String,String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(context);
+                    }
+                    String strRegId = gcm.register(SENDER_ID);
+                    msg = "Device registered, registration id=" + strRegId;
+
+                    // send id to our server
+                    sendRegIdToServer(strRegId);
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+                Log.d("T",msg);
+                return msg;
+            }
+            @Override
+            protected void onPostExecute(String msg) {
+
+            }
+        }.execute(null, null, null);
+        
         //getTeam();
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
+
+    private void sendRegIdToServer(final String strId) {
+        new AsyncTask<Void,String,String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String HTML = "empty";
+                try {
+                    String serverURL = prefs.getString("Server", "ds216.net");
+                    APICallBuilder Apicall = new APICallBuilder("http://" + serverURL + "/team/");
+                    Apicall.setGETpara("handler=login&action=gcm");
+                    JSONObject obj = new JSONObject();
+                    Sharedinfo share = Sharedinfo.getInstance();
+                    obj.put("username", share.getUser().getUsername());
+                    obj.put("gcmid", strId);
+                    Log.d("GCM", obj.toString());
+                    Apicall.setPOSTpara(obj.toString());
+                    HTML = Apicall.getResponse();
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+                return HTML;
+            }
+            @Override
+            protected void onPostExecute(String msg) {
+            }
+        }.execute(null, null, null);
+    }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {

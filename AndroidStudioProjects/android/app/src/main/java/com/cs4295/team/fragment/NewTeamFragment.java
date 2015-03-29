@@ -2,6 +2,7 @@ package com.cs4295.team.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.cs4295.team.R;
 import com.cs4295.team.util.APICallBuilder;
 import com.cs4295.team.util.Sharedinfo;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -25,6 +27,8 @@ import org.json.JSONObject;
 public class NewTeamFragment  extends Fragment {
     EditText inputname;
     EditText inputdesrc;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

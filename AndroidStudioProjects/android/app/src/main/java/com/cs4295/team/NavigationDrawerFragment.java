@@ -258,7 +258,8 @@ public class NavigationDrawerFragment extends Fragment {
             default:
                 Log.d("Fragment", "Selected : " + position);
                 TeamMessageFragment temp = new TeamMessageFragment();
-                temp.setTeamID(position);
+                int team_id = Sharedinfo.getInstance().getTeams().get(position-2).getTeamid();//get the real id
+                temp.setTeamID(team_id);
                 fragment = temp;
         }
         if (fragment != null) {

@@ -17,6 +17,8 @@ import com.cs4295.team.util.MD5;
 import com.cs4295.team.util.Sharedinfo;
 import com.cs4295.team.util.Teaminfo;
 import com.cs4295.team.util.Userinfo;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +69,7 @@ public class LoginActivity extends Activity {
 						 editor.putString("username", json.getString("username"));
 						 editor.putString("token", json.getString("token"));
 						 editor.commit();
+
 					 }else{
 						 Context context = getApplicationContext();
 						 CharSequence text = getString(R.string.login_fail);
@@ -106,9 +109,27 @@ public class LoginActivity extends Activity {
 				 }
              super.handleMessage(msg);   
         }   
-   }; 
+   };
 
-	@Override
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i("DEBUG", "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);

@@ -26,4 +26,10 @@
 	
 	<string name="newteam_name">Team Name</string>
     <string name="newteam_desrc">Description</string>
+    <string name="new_message">new message</string>
+    <string name="message_topic">Topic</string>
+    <string name="message_content">content</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

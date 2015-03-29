@@ -1,6 +1,8 @@
 package com.cs4295.team.fragment;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +10,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -32,7 +37,7 @@ import java.util.ArrayList;
  */
 public class TeamMessageFragment extends Fragment {
 
-    private int relativeTeamID = -1; // the id in the arraylist of team, not same as the real id
+    private int teamID = -1; // the id in the arraylist of team, not same as the real id
     Sharedinfo shared = Sharedinfo.getInstance();
     private ArrayList<Message> msgs = new ArrayList<Message>();
     private final int rows = 20;
@@ -67,10 +72,31 @@ public class TeamMessageFragment extends Fragment {
             }
         };
     }
-
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.message, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.new_message) {
+            FragmentManager fragmentManager2 = getFragmentManager();
+            FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+            NewMessageFragment fragment2 = new NewMessageFragment();
+           // int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();
+            fragment2.setTeamId(teamID);
+            fragmentTransaction2.replace(R.id.container, fragment2);
+            fragmentTransaction2.commit();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        setHasOptionsMenu(true);
         /*
         if(relativeTeamID>=0) {
             page = 0;
@@ -81,7 +107,7 @@ public class TeamMessageFragment extends Fragment {
             Log.i("MsgList",msgs.toString());
         }*/
 
-        if(relativeTeamID>=0){
+        if(teamID>=0){
             page = 0;
             rootView = inflater.inflate(R.layout.fragment_messgelist, container, false);
             //TextView name = (TextView) rootView.findViewById(R.id.MsglistView);
@@ -117,13 +143,16 @@ public class TeamMessageFragment extends Fragment {
     }
 
     public int getTeamID() {
-        return relativeTeamID;
+        return teamID;
     }
 
     public void setTeamID(int teamID) {
-        this.relativeTeamID = teamID-2;
+        this.teamID = teamID;
     }
 
+    public void refresh(){
+        GetMsg();
+    }
     private Boolean GetMsg() {
         Log.d("DEBUG", "submiting");
         try {
@@ -136,8 +165,8 @@ public class TeamMessageFragment extends Fragment {
                                 APICallBuilder Apicall= new APICallBuilder("http://"+serverURL+"/team/");
                                 Apicall.setGETpara("handler=message&action=get");
                                 JSONObject obj = new JSONObject();
-                                int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();//get the real id
-                                obj.put("teamid", team_id);
+                              //  int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();//get the real id
+                                obj.put("teamid", teamID);
                                 obj.put("start",page);
                                 obj.put("rows",rows);
                                 Log.d("GetMsg", obj.toString());

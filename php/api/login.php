@@ -5,9 +5,13 @@ class loginHandler{
 		switch($para['action']){
 			case 'login':
 				return $this->login($para['username'],$para['password']);
+			break;
 			case 'check':
 				return $this->checktoken($para['username'],$para['token']);
-			break;			
+			break;
+			case 'gcm':
+				return $this->gcm($para['username'],$para['gcmid']);
+			break;
 		}
 	}
 
@@ -48,6 +52,16 @@ class loginHandler{
 			$arr['result']='False';
 		}
 		return $arr;			
+	}
+	
+	function gcm($username,$gcmid){
+		$arr = array();
+		$query = $GLOBALS['mysqli']->query('UPDATE user SET gcmId =\''.$gcmid.'\' WHERE  username = \''.$username.'\'');
+		$arr['result']='True';
+		if(!$query){
+			$arr['result']='False';
+		}
+		return $arr;
 	}
 	
 	function createToken() {
