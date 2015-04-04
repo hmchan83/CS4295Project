@@ -15,9 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cs4295.team.MainActivity;
 import com.cs4295.team.R;
@@ -53,13 +55,13 @@ public class TeamMessageFragment extends Fragment {
                     Log.d("Msg1", (String) msg.obj);
                     JSONObject json;
                     try {
+                        msgs.clear();
                         json = new JSONObject((String) msg.obj);
                         JSONArray arr = json.getJSONArray("msg");
                         for (int i = 0; i < arr.length(); i++) {
                             JSONObject item = arr.getJSONObject(i);
                             Message temp = new Message(item.getString("timestamp"), item.getInt("msgid"), item.getInt("replyid"), item.getInt("teamid"), item.getInt("uid"), item.getString("msg"), item.getString("title"));
                             msgs.add(temp);
-
                         }
                         for(Message msgt : msgs)
                         Log.i("Msg",msgt.getTitle());
@@ -74,8 +76,9 @@ public class TeamMessageFragment extends Fragment {
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.message, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+       // super.onCreateOptionsMenu(menu,inflater);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,6 +89,7 @@ public class TeamMessageFragment extends Fragment {
             NewMessageFragment fragment2 = new NewMessageFragment();
            // int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();
             fragment2.setTeamId(teamID);
+            fragmentTransaction2.addToBackStack(null);
             fragmentTransaction2.replace(R.id.container, fragment2);
             fragmentTransaction2.commit();
             return true;
@@ -120,6 +124,24 @@ public class TeamMessageFragment extends Fragment {
             adapter = new MessageAdapter(getActivity(), msgs);
             ListView list = (ListView) rootView.findViewById(R.id.MsglistView);
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("Msgid", msgs.get(position).getMsgid());
+                    bundle.putInt("Teamid", teamID);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    ViewMessageFragment fragment = new ViewMessageFragment();
+                    fragment.setArguments(bundle);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentTransaction.commit();
+
+                    //Toast.makeText(getActivity().getApplicationContext(),
+                    //        "" + msgs.get(position).getMsgid() +","+msgs.get(position).getMsg(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         return rootView;
     }
@@ -153,6 +175,7 @@ public class TeamMessageFragment extends Fragment {
     public void refresh(){
         GetMsg();
     }
+
     private Boolean GetMsg() {
         Log.d("DEBUG", "submiting");
         try {

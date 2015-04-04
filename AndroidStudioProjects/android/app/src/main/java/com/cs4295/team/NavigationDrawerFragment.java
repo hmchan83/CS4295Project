@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.cs4295.team.fragment.MainFragment;
 import com.cs4295.team.fragment.NewTeamFragment;
 import com.cs4295.team.fragment.TeamMessageFragment;
+import com.cs4295.team.fragment.TestFragment;
 import com.cs4295.team.util.Sharedinfo;
 import com.cs4295.team.util.Teaminfo;
 
@@ -12,6 +13,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import	android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -248,12 +250,14 @@ public class NavigationDrawerFragment extends Fragment {
         }
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (position) {
             case 0:
                 fragment = new MainFragment();
                 break;
             case 1:
                 fragment = new NewTeamFragment();
+                //fragment = new TestFragment();
                 break;
             default:
                 Log.d("Fragment", "Selected : " + position);
@@ -263,7 +267,8 @@ public class NavigationDrawerFragment extends Fragment {
                 fragment = temp;
         }
         if (fragment != null) {
-            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.container, fragment).commit();
         }
     }
 

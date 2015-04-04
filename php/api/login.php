@@ -12,6 +12,9 @@ class loginHandler{
 			case 'gcm':
 				return $this->gcm($para['username'],$para['gcmid']);
 			break;
+			case 'checkToken':
+				return $this->checktoken($para['token'],$para['username']);
+			break;
 		}
 	}
 
@@ -38,7 +41,7 @@ class loginHandler{
 		return $arr;
 	}
 	
-	function checktoken($token){// $token will pass to the server with MD5
+	function checktoken($token,$username){// $token will pass to the server with MD5
 		$arr=array();
 		$date = date('Y-m-d h:i:s', time());
 		$query = $GLOBALS['mysqli']->query('SELECT token FROM user WHERE username = \''.$username.'\' ');
@@ -46,7 +49,12 @@ class loginHandler{
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
 		}
 		$result = $query->fetch_array(MYSQLI_BOTH);
-		if(md5($result) == $token){
+		if(md5($result[0]) == $token){
+			$query = $GLOBALS['mysqli']->query('SELECT uid,username FROM user WHERE username = \''.$username.'\'');
+			$results = $query->fetch_array(MYSQLI_ASSOC);
+			foreach($results as $key=>$var){
+				$arr[$key]=$var;	
+			}
 			$arr['result']='True';
 		}else{
 			$arr['result']='False';

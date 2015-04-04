@@ -1,6 +1,8 @@
 package com.cs4295.team.fragment;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cs4295.team.MainActivity;
 import com.cs4295.team.R;
@@ -40,7 +43,14 @@ public class NewTeamFragment  extends Fragment {
             @Override
             public void onClick(View arg0) {
                 NewTeam();
-
+                Toast.makeText(getActivity(),"new team created",Toast.LENGTH_LONG);
+                FragmentManager fragmentManager2 = getFragmentManager();
+                FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+               // NewMessageFragment fragment2 = new NewMessageFragment();
+                // int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();
+               // fragment2.setTeamId(teamID);
+                fragmentTransaction2.replace(R.id.container, new MainFragment());
+                fragmentTransaction2.commit();
             }
         });
 

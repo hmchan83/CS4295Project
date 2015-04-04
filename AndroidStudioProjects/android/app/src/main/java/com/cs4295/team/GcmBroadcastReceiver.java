@@ -45,19 +45,49 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
                 new Intent(ctx, MainActivity.class), 0);
-
+        int type = 0;
+        int nums = 0;
+        for (String key : msg.keySet()) {
+            Object value = msg.get(key);
+            Log.d(TAG, String.format("%s %s (%s)", key, value.toString(), value
+                    .getClass().getName()));
+            if (key.equals("type"))
+                type = Integer.parseInt((String) value);
+            if (key.equals("nums"))
+                nums = Integer.parseInt((String) value);
+        }
+        /*
         for (String key : msg.keySet()) {
             Object value = msg.get(key);
             Log.d(TAG, String.format("%s %s (%s)", key,
                     value.toString(), value.getClass().getName()));
-        }
+        }*/
         String showmsg = "";
+        switch (type) {
+            case 1: // New Post
+                showmsg = ctx.getString(R.string.notification_newPost);
+                break;
+            case 2:// New Reply
+                showmsg = ctx.getString(R.string.notification_newReply);
+                break;
+            case 3:// Add to team
+                showmsg = ctx.getString(R.string.notification_addToTeam);
+                break;
+            case 4:// Removed form team
+                showmsg = ctx.getString(R.string.notification_removeFromTeam);
+                break;
+            case 5: // set to admin
+                showmsg = ctx.getString(R.string.notification_setAsAdmin);
+                break;
+            default:
+                break;
+        }
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(ctx)
                         .setSmallIcon(R.drawable.ic_launcher)
-                        .setContentTitle(msg.toString())
-                        .setContentText("touch to view")
+                        .setContentTitle(showmsg)
+                        .setContentText("Click to view details")
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(showmsg))
                         .setAutoCancel(true);
 
