@@ -175,12 +175,12 @@ public final class R {
 		public static final int common_signin_button_text = 0x7f0a0022;
 		public static final int common_signin_button_text_long = 0x7f0a0023;
 		public static final int commono_google_play_services_api_unavailable_text = 0x7f0a0024;
-		public static final int create_calendar_message = 0x7f0a0025;
-		public static final int create_calendar_title = 0x7f0a0026;
-		public static final int decline = 0x7f0a0027;
-		public static final int store_picture_message = 0x7f0a003f;
-		public static final int store_picture_title = 0x7f0a0040;
-		public static final int wallet_buy_button_place_holder = 0x7f0a0047;
+		public static final int create_calendar_message = 0x7f0a0026;
+		public static final int create_calendar_title = 0x7f0a0027;
+		public static final int decline = 0x7f0a0028;
+		public static final int store_picture_message = 0x7f0a0041;
+		public static final int store_picture_title = 0x7f0a0042;
+		public static final int wallet_buy_button_place_holder = 0x7f0a0049;
 	}
 	public static final class style {
 		public static final int Theme_IAPTheme = 0x7f0b0002;

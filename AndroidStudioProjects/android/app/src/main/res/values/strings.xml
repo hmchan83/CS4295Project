@@ -29,7 +29,7 @@
     <string name="new_message">new message</string>
     <string name="message_topic">Topic</string>
     <string name="message_content">content</string>
-    <string name="addmember">Add member</string>
+    <string name="addmember">Add Member</string>
     <string name="newreply">New reply</string>
 
     <string name="notification_addToTeam">You have been added to Team : </string>
@@ -37,4 +37,8 @@
     <string name="notification_newPost">A new post have been post in Team : </string>
     <string name="notification_newReply">A new reply on your post</string>
     <string name="notification_setAsAdmin">You have been set as Admin of Team : </string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="confirmAddMember">The following user will be added to Team.</string>
 </resources>

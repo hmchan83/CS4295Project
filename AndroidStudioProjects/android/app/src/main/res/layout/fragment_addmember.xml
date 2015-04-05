@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.cs4295.team.fragment.AddmemberFragment">
+
+
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchMember"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:baselineAligned="false"
+        android:measureWithLargestChild="false"
+        android:iconifiedByDefault="false" />
+
+    <ListView
+        android:layout_below="@+id/searchMember"
+        android:layout_above="@+id/addMemberButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listMember"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addmember"
+        android:id="@+id/addMemberButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

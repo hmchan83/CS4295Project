@@ -15,6 +15,9 @@ class loginHandler{
 			case 'checkToken':
 				return $this->checktoken($para['token'],$para['username']);
 			break;
+			case 'searchUser':
+				return $this->searchUser($para['teamid'],$para['str']);
+			break;
 		}
 	}
 
@@ -68,6 +71,24 @@ class loginHandler{
 		$arr['result']='True';
 		if(!$query){
 			$arr['result']='False';
+		}
+		return $arr;
+	}
+	
+	function searchUser($teamid,$str){
+		$arr=array();
+		$start = 0;
+		$rows = 50;
+		$sql = 'SELECT `uid`,`username` from `user` where `uid` NOT IN (SELECT `uid` FROM `team_user` WHERE `teamid` = \''.$teamid.'\') AND `username` LIKE \'%'.$str.'%\' Order by `uid` DESC LIMIT '.$start.', '.$rows;
+		$query = $GLOBALS['mysqli']->query($sql);
+		if(!$query){
+			printf("Error: %s\n", $GLOBALS['mysqli']->error);
+		}else{
+			$msg = array();
+			while($result = $query->fetch_array(MYSQLI_ASSOC)){
+				$msg[]=$result;
+			}
+			$arr['users']=$msg;
 		}
 		return $arr;
 	}

@@ -18,8 +18,14 @@ class memberHandler{
 	}
 	
 	function addMember($teamid, $uid){
+		$value = array();
+		for($i=0;$i<count($uid);$i++){
+			$value[] = '(\''.$uid[$i].'\',\''.$teamid.'\',0)';
+		}
+		$addsql = implode(",",$value);
 		$arr=array();
-		$sql = 'INSERT into team_user (`uid`, `teamid`,`isadmin`) VALUES (\''.$uid.'\',\''.$teamid.'\',\'0\')';
+		$sql = 'INSERT into team_user (`uid`, `teamid`,`isadmin`) VALUES '.$addsql;
+		echo $sql;
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
@@ -59,5 +65,6 @@ class memberHandler{
 		}
 		return $arr;
 	}
+
 }
 ?>

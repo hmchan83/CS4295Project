@@ -46,15 +46,15 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0,
                 new Intent(ctx, MainActivity.class), 0);
         int type = 0;
-        int nums = 0;
+        int teamid = 0;
         for (String key : msg.keySet()) {
             Object value = msg.get(key);
             Log.d(TAG, String.format("%s %s (%s)", key, value.toString(), value
                     .getClass().getName()));
             if (key.equals("type"))
                 type = Integer.parseInt((String) value);
-            if (key.equals("nums"))
-                nums = Integer.parseInt((String) value);
+            if (key.equals("teamid"))
+                teamid = Integer.parseInt((String) value);
         }
         /*
         for (String key : msg.keySet()) {
