@@ -110,7 +110,7 @@ public class AddmemberFragment extends Fragment {
                     JSONArray arr = json.getJSONArray("users");
                     for(int i=0;i<arr.length();i++){
                         JSONObject userinfo = (JSONObject)arr.get(i);
-                        searchResults.add(new Userinfo(userinfo.getInt("uid"),userinfo.getString("username")));
+                        searchResults.add(new Userinfo(userinfo.getInt("uid"),userinfo.getString("username"),userinfo.getString("name"),userinfo.getString("tel")));
                     }
                     ListView list = (ListView) rootView.findViewById(R.id.listMember);
                     adapter = new UserAdapter(getActivity(),searchResults);
@@ -161,7 +161,7 @@ public class AddmemberFragment extends Fragment {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked==true){
-                            selected.add(new Userinfo(searchArrayList.get(pos).getUid(),searchArrayList.get(pos).getUsername()));
+                            selected.add(new Userinfo(searchArrayList.get(pos).getUid(),searchArrayList.get(pos).getUsername(),searchArrayList.get(pos).getName(),searchArrayList.get(pos).getTel()));
                         }else{
                             for(Userinfo u : selected){
                                 if(u.getUid() == searchArrayList.get(pos).getUid()){
@@ -180,7 +180,7 @@ public class AddmemberFragment extends Fragment {
             }
 
             holder.member_username.setText(searchArrayList.get(position).getUsername());
-            holder.member_name.setText(searchArrayList.get(position).getUsername());
+            holder.member_name.setText(searchArrayList.get(position).getName());
             return convertView;
         }
 

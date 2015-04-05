@@ -105,6 +105,18 @@ public class TeamMessageFragment extends Fragment {
             fragmentTransaction2.replace(R.id.container, fragment2);
             fragmentTransaction2.commit();
             return true;
+        }else if(id == R.id.listmember){
+            FragmentManager fragmentManager2 = getFragmentManager();
+            FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+            Fragment fragment2 = new ListmemberFragment();
+            // int team_id = Sharedinfo.getInstance().getTeams().get(relativeTeamID).getTeamid();
+            Bundle bundle = new Bundle();
+            bundle.putInt("Teamid", teamID);
+            fragmentTransaction2.addToBackStack(null);
+            fragment2.setArguments(bundle);
+            fragmentTransaction2.replace(R.id.container, fragment2);
+            fragmentTransaction2.commit();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

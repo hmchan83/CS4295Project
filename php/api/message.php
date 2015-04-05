@@ -27,6 +27,11 @@ class messageHandler{
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
 		}else{
 			$arr['result'] = 'true';
+			$handler = new GCMHandler();
+			if($replyid==0)
+				$handler->sendNewPostMsg($teamid,$uid);
+			else
+				$handler->sendNewReplyMsg($teamid,$replyid,$uid);
 		}
 		return $arr;
 	}

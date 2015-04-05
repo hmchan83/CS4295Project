@@ -32,13 +32,15 @@ class memberHandler{
 			$arr['result'] = 'false';
 		}else{
 			$arr['result'] = 'true';
+			$handler = new GCMHandler();
+			$handler -> sendAddtoTeamMsg($teamid,$uid);
 		}
 		return $arr;
 	}
 
 	function getMembers($teamid){
 		$arr=array();
-		$sql = 'SELECT * from team_user where `teamid` = \''.$teamid.'\'';
+		$sql = 'SELECT `uid`,`username`,`name`,`tel` FROM `user` WHERE uid IN (SELECT uid from team_user where `teamid` = \''.$teamid.'\')';
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
@@ -48,7 +50,8 @@ class memberHandler{
 			while($result = $query->fetch_array(MYSQLI_ASSOC)){
 				$members[]=$result;
 			}
-			$arr['result']=$members;
+			$arr['users']=$members;
+			$arr['result'] = 'true';
 		}
 		return $arr;
 	}

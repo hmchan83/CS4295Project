@@ -63,7 +63,7 @@ public class LoginActivity extends Activity {
 					 Log.d("handleMessage","'"+res+"'");
 					 Log.d("handleMessage",""+(json.getString("result").equals("True")));
 					 if(json.getString("result").equals("True")){
-						 share.setUser(new Userinfo(json.getInt("uid"),json.getString("username")));						 
+						 share.setUser(new Userinfo(json.getInt("uid"),json.getString("username"),json.getString("name"),json.getString("tel")));
 						 getTeam();
 						 SharedPreferences.Editor editor = prefs.edit();
 						 editor.putString("username", json.getString("username"));
@@ -113,7 +113,7 @@ public class LoginActivity extends Activity {
 					 Log.d("handleMessage","'"+res+"'");
 					 Log.d("handleMessage",""+(json.getString("result").equals("True")));
 					 if(json.getString("result").equals("True")){
-						 share.setUser(new Userinfo(json.getInt("uid"), json.getString("username")));
+						 share.setUser(new Userinfo(json.getInt("uid"), json.getString("username"),json.getString("name"),json.getString("tel")));
 						 getTeam();
 						 SharedPreferences.Editor editor = prefs.edit();
 						 editor.putString("username", json.getString("username"));

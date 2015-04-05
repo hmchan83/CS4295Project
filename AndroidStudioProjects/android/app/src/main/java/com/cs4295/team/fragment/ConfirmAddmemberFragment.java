@@ -153,6 +153,8 @@ public class ConfirmAddmemberFragment extends Fragment {
             final int  pos = position;
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.memberlist_item, null);
+                CheckBox cb = (CheckBox)convertView.findViewById(R.id.selected);
+                cb.setVisibility(View.INVISIBLE);
                 holder = new ViewHolder();
                 holder.member_username = (TextView) convertView.findViewById(R.id.member_username);
                 holder.member_name = (TextView) convertView.findViewById(R.id.member_name);

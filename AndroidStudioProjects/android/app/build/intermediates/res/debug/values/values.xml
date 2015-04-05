@@ -105,8 +105,10 @@ available. Please contact the developer for assistance.</string>
     <string name="decline">Decline</string>
     <!-- From: file:/T:/AndroidStudioProjects/android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="delmember">Delete Member</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
+    <string name="listmember">Member List</string>
     <string name="login_error">Login Error!</string>
     <string name="login_fail">Login Fail!</string>
     <string name="login_password">Password : </string>

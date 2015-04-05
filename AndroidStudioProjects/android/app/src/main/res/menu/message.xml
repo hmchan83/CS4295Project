@@ -9,9 +9,19 @@
         android:title="@string/new_message"
     />
     <item
+        android:id="@+id/listmember"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/listmember"/>
+    <item
         android:id="@+id/addmember"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/addmember"/>
+    <item
+        android:id="@+id/delmember"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/delmember"/>
 
 </menu>

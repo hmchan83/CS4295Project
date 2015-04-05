@@ -32,7 +32,7 @@ class loginHandler{
 			$arr['result']='True';			
 			$date = date('Y-m-d h:i:s', time()+3600);
 			$query2 = $GLOBALS['mysqli']->query('UPDATE user SET token =\''.$this->createToken().'\', expireday=\''.$date.'\' WHERE  username = \''.$username.'\' AND password = \''.$password.'\'');
-			$query = $GLOBALS['mysqli']->query('SELECT uid,username,token FROM user WHERE username = \''.$username.'\' AND password = \''.$password.'\'');
+			$query = $GLOBALS['mysqli']->query('SELECT uid,username,token,name,tel FROM user WHERE username = \''.$username.'\' AND password = \''.$password.'\'');
 			$results = $query->fetch_array(MYSQLI_ASSOC);
 			foreach($results as $key=>$var){
 				$arr[$key]=$var;	
@@ -53,7 +53,7 @@ class loginHandler{
 		}
 		$result = $query->fetch_array(MYSQLI_BOTH);
 		if(md5($result[0]) == $token){
-			$query = $GLOBALS['mysqli']->query('SELECT uid,username FROM user WHERE username = \''.$username.'\'');
+			$query = $GLOBALS['mysqli']->query('SELECT uid,username,name,tel FROM user WHERE username = \''.$username.'\'');
 			$results = $query->fetch_array(MYSQLI_ASSOC);
 			foreach($results as $key=>$var){
 				$arr[$key]=$var;	
@@ -79,7 +79,7 @@ class loginHandler{
 		$arr=array();
 		$start = 0;
 		$rows = 50;
-		$sql = 'SELECT `uid`,`username` from `user` where `uid` NOT IN (SELECT `uid` FROM `team_user` WHERE `teamid` = \''.$teamid.'\') AND `username` LIKE \'%'.$str.'%\' Order by `uid` DESC LIMIT '.$start.', '.$rows;
+		$sql = 'SELECT `uid`,`username`,`name`,`tel` from `user` where `uid` NOT IN (SELECT `uid` FROM `team_user` WHERE `teamid` = \''.$teamid.'\') AND `username` LIKE \'%'.$str.'%\' Order by `uid` DESC LIMIT '.$start.', '.$rows;
 		$query = $GLOBALS['mysqli']->query($sql);
 		if(!$query){
 			printf("Error: %s\n", $GLOBALS['mysqli']->error);
