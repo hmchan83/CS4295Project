@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/message_topic"
+            android:id="@+id/lbl_topic"
+            android:layout_marginLeft="26dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="20dp" />
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:id="@+id/val_topic"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/Msg_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/replyList"
+        />
+    </LinearLayout>
+
+
+</LinearLayout><!-- From: file:/T:/AndroidStudioProjects/android/app/src/main/res/layout/fragment_viewmessage.xml -->
